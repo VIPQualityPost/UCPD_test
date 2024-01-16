@@ -1,0 +1,303 @@
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"usbpd_trace.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.USBPD_TRACE_Init,"ax",%progbits
+  20              		.align	1
+  21              		.global	USBPD_TRACE_Init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	USBPD_TRACE_Init:
+  27              	.LFB107:
+  28              		.file 1 "Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c"
+   1:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /**
+   2:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   ******************************************************************************
+   3:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @file    usbpd_trace.c
+   4:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @author  MCD Application Team
+   5:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @brief   This file contains trace control functions.
+   6:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   ******************************************************************************
+   7:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @attention
+   8:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   *
+   9:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * Copyright (c) 2021 STMicroelectronics.
+  10:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * All rights reserved.
+  11:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   *
+  12:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * in the root directory of this software component.
+  14:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   *
+  16:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   ******************************************************************************
+  17:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  18:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  19:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Includes ------------------------------------------------------------------*/
+  20:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define USBPD_TRACE_C
+  21:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  22:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #include "usbpd_def.h"
+  23:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #include "usbpd_core.h"
+  24:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #include "usbpd_trace.h"
+  25:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #ifdef _TRACE
+  26:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #include "tracer_emb.h"
+  27:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #endif /* _TRACE */
+  28:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  29:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @addtogroup STM32_USBPD_LIBRARY
+  30:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 2
+
+
+  31:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  32:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  33:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @addtogroup USBPD_CORE
+  34:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  35:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  36:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  37:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @addtogroup USBPD_CORE_TRACE
+  38:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  39:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  40:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  41:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private enums -------------------------------------------------------------*/
+  42:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private typedef -----------------------------------------------------------*/
+  43:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private define ------------------------------------------------------------*/
+  44:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @defgroup USBPD_CORE_TRACE_Private_Defines USBPD CORE TRACE Private Defines
+  45:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  46:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  47:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  48:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TRACE_SIZE_HEADER_TRACE   9u      /* Type + Time x 2 + PortNum + Sop + Size */
+  49:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  50:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TRACE_PORT_BIT_POSITION   5u      /* Bit position of port number in TAG id */
+  51:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  52:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_SOF                   (uint8_t)0xFDu
+  53:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_EOF                   (uint8_t)0xA5u
+  54:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_SIZE_MAX              256u
+  55:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_HEADER_SIZE           3u /* Size of TLV header (TAG(1) + LENGTH(2)  */
+  56:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_SOF_SIZE              4u /* TLV_SOF * 4                             */
+  57:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TLV_EOF_SIZE              4u /* TLV_EOF * 4                             */
+  58:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  59:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define DEBUG_STACK_MESSAGE       0x12u
+  60:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /**
+  61:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @}
+  62:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  63:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  64:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private macro -------------------------------------------------------------*/
+  65:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @defgroup USBPD_CORE_TRACE_Private_Macros USBPD CORE TRACE Private Macros
+  66:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  67:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  68:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TRACE_SET_TAG_ID(_PORT_, _TAG_)         (((_PORT_) << TRACE_PORT_BIT_POSITION) | (_TAG_))
+  69:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  70:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #define TRACER_EMB_WRITE_DATA(_POSITION_,_DATA_)  do {                                        \
+  71:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****                                                        TRACER_EMB_WriteData((_POSITION_),(_DATA_));
+  72:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****                                                        (_POSITION_) = ((_POSITION_) + 1u);         
+  73:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****                                                      } while(0)
+  74:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /**
+  75:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @}
+  76:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  77:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  78:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private function prototypes -----------------------------------------------*/
+  79:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Private variables ---------------------------------------------------------*/
+  80:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @defgroup USBPD_CORE_TRACE_Private_Variables USBPD CORE TRACE Private Variables
+  81:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  82:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  83:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** extern uint32_t HAL_GetTick(void);
+  84:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** extern void     USBPD_DPM_TraceWakeUp(void);
+  85:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /**
+  86:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @}
+  87:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 3
+
+
+  88:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  89:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /* Exported functions ---------------------------------------------------------*/
+  90:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+  91:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** /** @addtogroup USBPD_CORE_TRACE_Exported_Functions
+  92:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   * @{
+  93:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   */
+  94:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** void USBPD_TRACE_Init(void)
+  95:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** {
+  29              		.loc 1 95 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  96:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #if defined(_TRACE)
+  97:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   static const uint8_t OverFlow_String[] =
+  98:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   {
+  99:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TLV_SOF, TLV_SOF, TLV_SOF, TLV_SOF,   /* Buffer header */
+ 100:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x32,                                 /* Tag id */
+ 101:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x0, 0x18,                            /* Length */
+ 102:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x6,                                  /* Type */
+ 103:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x0, 0x0, 0x0, 0x0,                   /* Time   */
+ 104:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x0,                                  /* PortNum */
+ 105:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x0,                                  /* SOP */
+ 106:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     0x0, 0x0F,                                                                 /* Size */
+ 107:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     'T', 'R', 'A', 'C', 'E', ' ', 'O', 'V', 'E', 'R', '_', 'F', 'L', 'O', 'W', /* Data */
+ 108:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TLV_EOF, TLV_EOF, TLV_EOF, TLV_EOF                                         /* Buffer end */
+ 109:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   };
+ 110:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 111:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* initialize tracer module */
+ 112:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   TRACER_EMB_Init();
+ 113:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 114:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Initialize PE trace */
+ 115:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   USBPD_PE_SetTrace(USBPD_TRACE_Add, 3u);
+ 116:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 117:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Initialize the overflow detection */
+ 118:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   (void)TRACER_EMB_EnableOverFlow(OverFlow_String, (uint8_t)sizeof(OverFlow_String));
+ 119:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #else
+ 120:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   return;
+  34              		.loc 1 120 3 view .LVU1
+ 121:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #endif /* _TRACE */
+ 122:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** }
+  35              		.loc 1 122 1 is_stmt 0 view .LVU2
+  36 0000 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE107:
+  40              		.section	.text.USBPD_TRACE_DeInit,"ax",%progbits
+  41              		.align	1
+  42              		.global	USBPD_TRACE_DeInit
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  47              	USBPD_TRACE_DeInit:
+  48              	.LFB108:
+ 123:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 124:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** void USBPD_TRACE_DeInit(void)
+ 125:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** {
+  49              		.loc 1 125 1 is_stmt 1 view -0
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 4
+
+
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              		@ link register save eliminated.
+ 126:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Nothing to do */
+ 127:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   return;
+  54              		.loc 1 127 3 view .LVU4
+ 128:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** }
+  55              		.loc 1 128 1 is_stmt 0 view .LVU5
+  56 0000 7047     		bx	lr
+  57              		.cfi_endproc
+  58              	.LFE108:
+  60              		.section	.text.USBPD_TRACE_Add,"ax",%progbits
+  61              		.align	1
+  62              		.global	USBPD_TRACE_Add
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	USBPD_TRACE_Add:
+  68              	.LVL0:
+  69              	.LFB109:
+ 129:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 130:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** void  USBPD_TRACE_Add(TRACE_EVENT Type, uint8_t PortNum, uint8_t Sop, uint8_t *Ptr, uint32_t Size)
+ 131:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** {
+  70              		.loc 1 131 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 4, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+ 132:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #if defined(_TRACE)
+ 133:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   uint32_t _time;
+ 134:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   int32_t _allocation;
+ 135:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   uint16_t index;
+ 136:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 137:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /*  Get trace timing */
+ 138:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   _time = HAL_GetTick();
+ 139:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 140:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   TRACER_EMB_Lock();
+ 141:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 142:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Data are encapsulate inside a TLV string*/
+ 143:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Allocate buffer Size */
+ 144:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   _allocation = TRACER_EMB_AllocateBufer(Size + TRACE_SIZE_HEADER_TRACE +
+ 145:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****                                          TLV_HEADER_SIZE + TLV_SOF_SIZE + TLV_EOF_SIZE);
+ 146:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 147:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   /* Check allocation */
+ 148:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   if (_allocation  != -1)
+ 149:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   {
+ 150:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     uint16_t _writepos = (uint16_t)_allocation;
+ 151:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 152:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* Copy SOF bytes */
+ 153:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     for (index = 0u; index < TLV_SOF_SIZE; index++)
+ 154:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     {
+ 155:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****       TRACER_EMB_WRITE_DATA(_writepos, TLV_SOF);
+ 156:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     }
+ 157:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* Copy the TAG */
+ 158:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, TRACE_SET_TAG_ID((PortNum + 1u), DEBUG_STACK_MESSAGE));
+ 159:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* Copy the LENGTH */
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 5
+
+
+ 160:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)((Size + TRACE_SIZE_HEADER_TRACE) >> 8u));
+ 161:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)(Size + TRACE_SIZE_HEADER_TRACE));
+ 162:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 163:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* Trace type */
+ 164:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)Type);
+ 165:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 166:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)_time);
+ 167:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)(_time >> 8u));
+ 168:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)(_time >> 16u));
+ 169:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)(_time >> 24u));
+ 170:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 171:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, PortNum);
+ 172:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, Sop);
+ 173:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 174:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)(Size >> 8u));
+ 175:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     TRACER_EMB_WRITE_DATA(_writepos, (uint8_t)Size);
+ 176:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 177:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* initialize the Ptr for Read/Write */
+ 178:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     for (index = 0u; index < Size; index++)
+ 179:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     {
+ 180:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****       TRACER_EMB_WRITE_DATA(_writepos, Ptr[index]);
+ 181:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     }
+ 182:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 183:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     /* Copy EOF bytes */
+ 184:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     for (index = 0u; index < TLV_EOF_SIZE; index++)
+ 185:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     {
+ 186:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****       TRACER_EMB_WRITE_DATA(_writepos, TLV_EOF);
+ 187:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****     }
+ 188:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   }
+ 189:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 190:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   TRACER_EMB_UnLock();
+ 191:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** 
+ 192:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   TRACER_EMB_SendData();
+ 193:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #else
+ 194:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c ****   return;
+  75              		.loc 1 194 3 view .LVU7
+ 195:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** #endif /* _TRACE */
+ 196:Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c **** }
+  76              		.loc 1 196 1 is_stmt 0 view .LVU8
+  77 0000 7047     		bx	lr
+  78              		.cfi_endproc
+  79              	.LFE109:
+  81              		.text
+  82              	.Letext0:
+  83              		.file 2 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/machine/_de
+  84              		.file 3 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/sys/_stdint
+  85              		.file 4 "Middlewares/ST/STM32_USBPD_Library/Core/inc/usbpd_core.h"
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usbpd_trace.c
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:20     .text.USBPD_TRACE_Init:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:26     .text.USBPD_TRACE_Init:0000000000000000 USBPD_TRACE_Init
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:41     .text.USBPD_TRACE_DeInit:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:47     .text.USBPD_TRACE_DeInit:0000000000000000 USBPD_TRACE_DeInit
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:61     .text.USBPD_TRACE_Add:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccgLn4K7.s:67     .text.USBPD_TRACE_Add:0000000000000000 USBPD_TRACE_Add
+
+NO UNDEFINED SYMBOLS

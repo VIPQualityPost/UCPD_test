@@ -1,0 +1,1215 @@
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"usbpd_phy.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.PHY_Rx_Completed,"ax",%progbits
+  20              		.align	1
+  21              		.global	PHY_Rx_Completed
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	PHY_Rx_Completed:
+  27              	.LVL0:
+  28              	.LFB962:
+  29              		.file 1 "Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c"
+   1:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+   2:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   ******************************************************************************
+   3:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @file    usbpd_phy.c
+   4:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @author  MCD Application Team
+   5:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief   This file contains PHY layer functions.
+   6:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   ******************************************************************************
+   7:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @attention
+   8:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   *
+   9:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * Copyright (c) 2019 STMicroelectronics.
+  10:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * All rights reserved.
+  11:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   *
+  12:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * in the root directory of this software component.
+  14:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   *
+  16:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   ******************************************************************************
+  17:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  18:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  19:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Includes ------------------------------------------------------------------*/
+  20:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #include "usbpd_def.h"
+  21:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #include "usbpd_phy.h"
+  22:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #include "usbpd_hw_if.h"
+  23:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #include "usbpd_pwr_if.h"
+  24:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  25:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @addtogroup STM32_USBPD_LIBRARY
+  26:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  27:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  28:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  29:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @addtogroup USBPD_DEVICE
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 2
+
+
+  30:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  31:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  32:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  33:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @addtogroup USBPD_DEVICE_PHY
+  34:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief   This file contains PHY layer functions.
+  35:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @details Receive from PRL a message and create a structured packet (according to the USBPD spec
+  36:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   *          |SOP|DATA:[HEADER|DATAOBJECTS]|CRC|EOP|
+  37:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  38:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  39:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  40:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Private defines -----------------------------------------------------------*/
+  41:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Private typedef -----------------------------------------------------------*/
+  42:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @defgroup USBPD_DEVICE_PHY_Private_typedef USBPD DEVICE PHY Private typedef
+  43:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief Structures and enums internally used by the PHY layer
+  44:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  45:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  46:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  47:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  48:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+  49:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief Handle to support the data of the layer
+  50:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  51:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** typedef struct
+  52:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+  53:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /**
+  54:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     * @brief  Reports that a message has been received on a specified port.
+  55:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     * @note   Received data are stored inside PortNum->pRxBuffPtr
+  56:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     *         function called in the interrupt context
+  57:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     * @param  PortNum The handle of the port
+  58:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     * @param  Type    The type of the message received @ref USBPD_SOPType_TypeDef
+  59:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     * @retval None
+  60:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     */
+  61:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   void (*USBPD_PHY_MessageReceived)(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
+  62:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  63:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   uint32_t  SupportedSOP;        /*!<bit field SOP"Debug SOP'Debug SOP" SOP' SOP */
+  64:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** } PHY_HandleTypeDef;
+  65:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  66:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+  67:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief prototype definition shared in several callbacks
+  68:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  69:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** typedef void (*PHY_CB_t)(uint8_t PortNum, USBPD_SOPType_TypeDef Type); /*!<  Common callback defini
+  70:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  71:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+  72:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @}
+  73:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  74:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  75:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Private define and macro --------------------------------------------------*/
+  76:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Private variables ---------------------------------------------------------*/
+  77:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @defgroup USBPD_DEVICE_PHY_Private_variables USBPD DEVICE PHY Private variables
+  78:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  79:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  80:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  81:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** Internal struct for RXTX */
+  82:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** static PHY_HandleTypeDef PHY_Ports[USBPD_PORT_COUNT];
+  83:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+  84:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @}
+  85:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  86:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 3
+
+
+  87:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Private function prototypes -----------------------------------------------*/
+  88:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @defgroup USBPD_DEVICE_PHY_Private_functions USBPD DEVICE PHY Private functions
+  89:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+  90:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+  91:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef         PHY_PortInit(uint8_t PortNum, const USBPD_PHY_Callbacks *cbs, uint8_t *
+  92:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****                                          uint32_t SupportedSOP);
+  93:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void                        PHY_ResetCompleted(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
+  94:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void                        PHY_Rx_HardReset(uint8_t PortNum);
+  95:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void                        PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType);
+  96:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+  97:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+  98:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @}
+  99:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 100:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 101:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /* Exported functions ---------------------------------------------------------*/
+ 102:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 103:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @defgroup USBPD_DEVICE_PHY_Exported_Functions USBPD DEVICE PHY Exported functions
+ 104:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+ 105:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 106:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 107:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Initialize the PHY of a specified port.
+ 108:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum       Number of the port.
+ 109:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  pCallbacks    PHY callbacks
+ 110:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  pRxBuffer     Buffer to storage received message.
+ 111:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PowerRole     Power Role of the board.
+ 112:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  SupportedSOP  bit field of the supported SOP
+ 113:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval status        @ref USBPD_OK
+ 114:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 115:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *pCallbacks, uint8_t 
+ 116:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****                                    USBPD_PortPowerRole_TypeDef PowerRole, uint32_t SupportedSOP)
+ 117:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 118:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PowerRole;
+ 119:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 120:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* set all callbacks */
+ 121:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted            = pCallbacks->USBPD_PHY_TxCompleted;
+ 122:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+ 123:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
+ 124:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
+ 125:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = pCallbacks->USBPD_PHY_ResetCompleted;
+ 126:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_FRSReception        = pCallbacks->USBPD_PHY_FastRoleSwapRecepti
+ 127:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Initialize the hardware for the port */
+ 128:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].ptr_RxBuff = pRxBuffer;
+ 129:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 130:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Initialize port related functionalities inside this layer */
+ 131:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].SupportedSOP = SupportedSOP;
+ 132:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].USBPD_PHY_MessageReceived = pCallbacks->USBPD_PHY_MessageReceived;
+ 133:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 134:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_OK;
+ 135:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 136:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 137:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 138:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  this function return the retry counter value in us.
+ 139:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @note   time used to determine when the protocol layer must re-send a message not acknowledged 
+ 140:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum    Number of the port.
+ 141:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval retry counter value in us.
+ 142:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 143:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** uint16_t USBPD_PHY_GetRetryTimerValue(uint8_t PortNum)
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 4
+
+
+ 144:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 145:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PortNum;
+ 146:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return 905u;
+ 147:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 148:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 149:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 150:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  this function return the min time to wait before sending a goodCRC to ack a message (in
+ 151:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @note   time used to guarantee the min time of 26us between two PD message.
+ 152:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum    Number of the port.
+ 153:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval value in us.
+ 154:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 155:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** uint16_t USBPD_PHY_GetMinGOODCRCTimerValue(uint8_t PortNum)
+ 156:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 157:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return 30u;
+ 158:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 159:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 160:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 161:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Reset the PHY of a specified port.
+ 162:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum    Number of the port.
+ 163:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None
+ 164:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 165:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_Reset(uint8_t PortNum)
+ 166:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 167:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PortNum;
+ 168:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* reset PHY layer   */
+ 169:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* reset HW_IF layer */
+ 170:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 171:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 172:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 173:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Request to send a reset on a port.
+ 174:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum Number of the port
+ 175:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  Type    Type of reset (hard or cable reset) @ref USBPD_SOPTYPE_HARD_RESET or @ref USBPD
+ 176:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval status  @ref USBPD_OK
+ 177:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 178:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef USBPD_PHY_ResetRequest(uint8_t PortNum, USBPD_SOPType_TypeDef Type)
+ 179:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 180:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Send the requested reset */
+ 181:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_PHY_SendMessage(PortNum, Type, NULL, 0);
+ 182:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 183:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 184:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 185:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Send a Message.
+ 186:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum   Number of the port
+ 187:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  Type      Type of the message
+ 188:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  pBuffer   Pointer to the buffer to be transmitted
+ 189:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  Size      Size of the buffer (bytes)
+ 190:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval status    @ref USBPD_OK
+ 191:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 192:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef USBPD_PHY_SendMessage(uint8_t PortNum, USBPD_SOPType_TypeDef Type, uint8_t *pBu
+ 193:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 194:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Trace to track message */
+ 195:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_HW_IF_SendBuffer(PortNum, Type, pBuffer,  Size);
+ 196:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 197:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 198:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 199:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Send BIST pattern.
+ 200:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum   Number of the port
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 5
+
+
+ 201:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval status    @ref USBPD_OK
+ 202:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 203:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef USBPD_PHY_Send_BIST_Pattern(uint8_t PortNum)
+ 204:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 205:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Call the low-level function (HW_IF) to accomplish the BIST Carrier Mode Transmission */
+ 206:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_Send_BIST_Pattern(PortNum);
+ 207:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_OK;
+ 208:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 209:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 210:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 211:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Request PHY to exit of BIST mode 2
+ 212:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum port number value
+ 213:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  mode    SOP BIST MODE 2
+ 214:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval USBPD   status
+ 215:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 216:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** USBPD_StatusTypeDef USBPD_PHY_ExitTransmit(uint8_t PortNum, USBPD_SOPType_TypeDef mode)
+ 217:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 218:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   if (USBPD_SOPTYPE_BIST_MODE_2 == mode)
+ 219:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   {
+ 220:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     USBPD_HW_IF_StopBISTMode2(PortNum);
+ 221:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   }
+ 222:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_OK;
+ 223:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 224:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 225:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 226:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Set the SinkTxNg value of the resistor,
+ 227:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @note   used to manage the collision avoidance
+ 228:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum  Number of the port
+ 229:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None
+ 230:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 231:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_SetResistor_SinkTxNG(uint8_t PortNum)
+ 232:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 233:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxNG(PortNum);
+ 234:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 235:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 236:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 237:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  function to set the SinkTxOK
+ 238:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @note   used to manage the collision avoidance
+ 239:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum  Number of the port.
+ 240:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval none.
+ 241:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 242:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_SetResistor_SinkTxOK(uint8_t PortNum)
+ 243:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 244:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxOK(PortNum);
+ 245:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 246:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 247:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 248:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  function to set the supported SOP
+ 249:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum  Number of the port.
+ 250:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  SOPSupported  List of the supported SOP
+ 251:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None.
+ 252:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 253:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_SOPSupported(uint8_t PortNum, uint32_t SOPSupported)
+ 254:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 255:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].SupportedSOP = SOPSupported;
+ 256:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 257:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 6
+
+
+ 258:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 259:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Check if SinkTxOK is set or not
+ 260:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @note   used to manage the collision avoidance
+ 261:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum  Number of the port.
+ 262:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval USBPD_TRUE or USBPD_FALSE
+ 263:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 264:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** uint8_t USBPD_PHY_IsResistor_SinkTxOk(uint8_t PortNum)
+ 265:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 266:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_HW_IF_IsResistor_SinkTxOk(PortNum);
+ 267:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 268:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 269:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 270:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  function to generate an FRS signalling
+ 271:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum  Number of the port.
+ 272:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None.
+ 273:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 274:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_FastRoleSwapSignalling(uint8_t PortNum)
+ 275:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 276:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_FastRoleSwapSignalling(PortNum);
+ 277:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 278:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 279:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 280:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  function used to enable RX
+ 281:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum    Number of the port.
+ 282:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None
+ 283:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 284:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_EnableRX(uint8_t PortNum)
+ 285:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 286:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_EnableRX(PortNum);
+ 287:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 288:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 289:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 290:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  function used to disable RX
+ 291:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum    Number of the port.
+ 292:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None
+ 293:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 294:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void USBPD_PHY_DisableRX(uint8_t PortNum)
+ 295:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+ 296:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_DisableRX(PortNum);
+ 297:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 298:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 299:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 300:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @}
+ 301:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 302:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 303:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /** @addtogroup USBPD_DEVICE_PHY_Private_functions
+ 304:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief PHY internally used functions
+ 305:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @{
+ 306:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 307:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 308:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** /**
+ 309:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @brief  Callback to notify the end of the current reception
+ 310:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  PortNum   Number of the port.
+ 311:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @param  MsgType   SOP Message Type
+ 312:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   * @retval None.
+ 313:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   */
+ 314:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType)
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 7
+
+
+ 315:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** {
+  30              		.loc 1 315 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 315 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 14, -4
+  39 0002 83B0     		sub	sp, sp, #12
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 16
+  42 0004 0346     		mov	r3, r0
+  43 0006 0A46     		mov	r2, r1
+ 316:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   const USBPD_SOPType_TypeDef tab_sop_value[] =
+  44              		.loc 1 316 3 is_stmt 1 view .LVU2
+  45              		.loc 1 316 31 is_stmt 0 view .LVU3
+  46 0008 1849     		ldr	r1, .L6
+  47              	.LVL1:
+  48              		.loc 1 316 31 view .LVU4
+  49 000a 03C9     		ldm	r1, {r0, r1}
+  50              	.LVL2:
+  51              		.loc 1 316 31 view .LVU5
+  52 000c 0090     		str	r0, [sp]
+  53 000e ADF80410 		strh	r1, [sp, #4]	@ movhi
+ 317:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   {
+ 318:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     USBPD_SOPTYPE_SOP, USBPD_SOPTYPE_SOP1, USBPD_SOPTYPE_SOP2,
+ 319:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     USBPD_SOPTYPE_SOP1_DEBUG, USBPD_SOPTYPE_SOP2_DEBUG, USBPD_SOPTYPE_CABLE_RESET
+ 320:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   };
+ 321:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_SOPType_TypeDef _msgtype;
+  54              		.loc 1 321 3 is_stmt 1 view .LVU6
+ 322:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 323:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   _msgtype = tab_sop_value[MsgType];
+  55              		.loc 1 323 3 view .LVU7
+  56              		.loc 1 323 12 is_stmt 0 view .LVU8
+  57 0012 0832     		adds	r2, r2, #8
+  58              	.LVL3:
+  59              		.loc 1 323 12 view .LVU9
+  60 0014 6A44     		add	r2, sp, r2
+  61              	.LVL4:
+  62              		.loc 1 323 12 view .LVU10
+  63 0016 12F8081C 		ldrb	r1, [r2, #-8]	@ zero_extendqisi2
+  64              	.LVL5:
+ 324:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 325:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* check if the message must be forwarded to usbpd stack */
+ 326:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   switch (_msgtype)
+  65              		.loc 1 326 3 is_stmt 1 view .LVU11
+  66 001a 0429     		cmp	r1, #4
+  67 001c 16D9     		bls	.L2
+  68 001e 0629     		cmp	r1, #6
+  69 0020 07D1     		bne	.L1
+ 327:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   {
+ 328:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_CABLE_RESET :
+ 329:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       if (0x1Eu == (PHY_Ports[PortNum].SupportedSOP & 0x1Eu))
+  70              		.loc 1 329 7 view .LVU12
+  71              		.loc 1 329 39 is_stmt 0 view .LVU13
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 8
+
+
+  72 0022 134A     		ldr	r2, .L6+4
+  73 0024 02EBC302 		add	r2, r2, r3, lsl #3
+  74 0028 5268     		ldr	r2, [r2, #4]
+  75              		.loc 1 329 53 view .LVU14
+  76 002a 02F01E02 		and	r2, r2, #30
+  77              		.loc 1 329 10 view .LVU15
+  78 002e 1E2A     		cmp	r2, #30
+  79 0030 02D0     		beq	.L5
+  80              	.LVL6:
+  81              	.L1:
+ 330:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 331:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         /* nothing to do the message will be discarded and the port partner retry the send */
+ 332:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication(PortNum, USBPD_SOPTYPE_CABLE_RESET);
+ 333:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 334:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       break;
+ 335:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_SOP :
+ 336:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_SOP1 :
+ 337:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_SOP2 :
+ 338:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_SOP1_DEBUG :
+ 339:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     case USBPD_SOPTYPE_SOP2_DEBUG :
+ 340:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       if (!((uint8_t)(0x1u << _msgtype) != (PHY_Ports[PortNum].SupportedSOP & (uint8_t)(0x1u << _ms
+ 341:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 342:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         PHY_Ports[PortNum].USBPD_PHY_MessageReceived(PortNum, _msgtype);
+ 343:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 344:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #if defined(DEBUG_NOTFWD)
+ 345:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       else
+ 346:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 347:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         typedef union
+ 348:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         {
+ 349:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****           uint16_t d16;
+ 350:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****           struct
+ 351:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****           {
+ 352:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t MessageType            :5;   /*!< Message Header's message Type               
+ 353:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t PortDataRole           :1;   /*!< Message Header's Port Data Role             
+ 354:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t SpecificationRevision  :2;   /*!< Message Header's Spec Revision              
+ 355:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t PortPowerRole_CablePlug:1;   /*!< Message Header's Port Power Role/Cable Plug 
+ 356:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t MessageID              :3;   /*!< Message Header's message ID                 
+ 357:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t NumberOfDataObjects    :3;   /*!< Message Header's Number of data object      
+ 358:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****             uint16_t Extended               :1;   /*!< Reserved                                    
+ 359:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****           }
+ 360:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****           b;
+ 361:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         } USBPD_MsgHeader_TypeDef;
+ 362:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 363:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         USBPD_MsgHeader_TypeDef header_rx;
+ 364:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         header_rx.d16 = USBPD_LE16(Ports[PortNum].ptr_RxBuff);
+ 365:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****         USBPD_TRACE_Add(USBPD_TRACE_PHY_NOTFRWD, PortNum, _msgtype, Ports[PortNum].ptr_RxBuff,
+ 366:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****                         2u + (header_rx.b.NumberOfDataObjects * 4u));
+ 367:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 368:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** #endif /* DEBUG_NOTFWD */
+ 369:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       break;
+ 370:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****     default :
+ 371:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       break;
+ 372:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   }
+ 373:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+  82              		.loc 1 373 1 view .LVU16
+  83 0032 03B0     		add	sp, sp, #12
+  84              	.LCFI2:
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 9
+
+
+  85              		.cfi_remember_state
+  86              		.cfi_def_cfa_offset 4
+  87              		@ sp needed
+  88 0034 5DF804FB 		ldr	pc, [sp], #4
+  89              	.LVL7:
+  90              	.L5:
+  91              	.LCFI3:
+  92              		.cfi_restore_state
+ 332:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+  93              		.loc 1 332 9 is_stmt 1 view .LVU17
+ 332:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+  94              		.loc 1 332 27 is_stmt 0 view .LVU18
+  95 0038 C3EB0311 		rsb	r1, r3, r3, lsl #4
+  96              	.LVL8:
+ 332:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+  97              		.loc 1 332 27 view .LVU19
+  98 003c 0D4A     		ldr	r2, .L6+8
+  99 003e 02EB8102 		add	r2, r2, r1, lsl #2
+ 100 0042 D269     		ldr	r2, [r2, #28]
+ 332:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 101              		.loc 1 332 9 view .LVU20
+ 102 0044 0621     		movs	r1, #6
+ 103 0046 1846     		mov	r0, r3
+ 104 0048 9047     		blx	r2
+ 105              	.LVL9:
+ 106 004a F2E7     		b	.L1
+ 107              	.LVL10:
+ 108              	.L2:
+ 340:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 109              		.loc 1 340 7 is_stmt 1 view .LVU21
+ 340:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 110              		.loc 1 340 28 is_stmt 0 view .LVU22
+ 111 004c 0122     		movs	r2, #1
+ 112 004e 8A40     		lsls	r2, r2, r1
+ 113 0050 D2B2     		uxtb	r2, r2
+ 340:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 114              		.loc 1 340 63 view .LVU23
+ 115 0052 0748     		ldr	r0, .L6+4
+ 116 0054 00EBC300 		add	r0, r0, r3, lsl #3
+ 117 0058 4068     		ldr	r0, [r0, #4]
+ 340:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       {
+ 118              		.loc 1 340 10 view .LVU24
+ 119 005a 8243     		bics	r2, r2, r0
+ 120 005c E9D1     		bne	.L1
+ 342:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 121              		.loc 1 342 9 is_stmt 1 view .LVU25
+ 342:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 122              		.loc 1 342 27 is_stmt 0 view .LVU26
+ 123 005e 044A     		ldr	r2, .L6+4
+ 124 0060 52F83320 		ldr	r2, [r2, r3, lsl #3]
+ 342:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****       }
+ 125              		.loc 1 342 9 view .LVU27
+ 126 0064 1846     		mov	r0, r3
+ 127 0066 9047     		blx	r2
+ 128              	.LVL11:
+ 129              		.loc 1 373 1 view .LVU28
+ 130 0068 E3E7     		b	.L1
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 10
+
+
+ 131              	.L7:
+ 132 006a 00BF     		.align	2
+ 133              	.L6:
+ 134 006c 00000000 		.word	.LANCHOR0
+ 135 0070 00000000 		.word	.LANCHOR1
+ 136 0074 00000000 		.word	Ports
+ 137              		.cfi_endproc
+ 138              	.LFE962:
+ 140              		.section	.text.USBPD_PHY_Init,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	USBPD_PHY_Init
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	USBPD_PHY_Init:
+ 148              	.LVL12:
+ 149              	.LFB947:
+ 117:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PowerRole;
+ 150              		.loc 1 117 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 4, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 117:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PowerRole;
+ 155              		.loc 1 117 1 is_stmt 0 view .LVU30
+ 156 0000 10B4     		push	{r4}
+ 157              	.LCFI4:
+ 158              		.cfi_def_cfa_offset 4
+ 159              		.cfi_offset 4, -4
+ 118:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 160              		.loc 1 118 3 is_stmt 1 view .LVU31
+ 121:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+ 161              		.loc 1 121 3 view .LVU32
+ 121:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+ 162              		.loc 1 121 69 is_stmt 0 view .LVU33
+ 163 0002 0C69     		ldr	r4, [r1, #16]
+ 121:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+ 164              		.loc 1 121 57 view .LVU34
+ 165 0004 C0EB001C 		rsb	ip, r0, r0, lsl #4
+ 166 0008 0D4B     		ldr	r3, .L10
+ 167              	.LVL13:
+ 121:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+ 168              		.loc 1 121 57 view .LVU35
+ 169 000a 03EB8C03 		add	r3, r3, ip, lsl #2
+ 170 000e 5C61     		str	r4, [r3, #20]
+ 122:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
+ 171              		.loc 1 122 3 is_stmt 1 view .LVU36
+ 122:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
+ 172              		.loc 1 122 69 is_stmt 0 view .LVU37
+ 173 0010 CC68     		ldr	r4, [r1, #12]
+ 122:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
+ 174              		.loc 1 122 57 view .LVU38
+ 175 0012 9C61     		str	r4, [r3, #24]
+ 123:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
+ 176              		.loc 1 123 3 is_stmt 1 view .LVU39
+ 123:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
+ 177              		.loc 1 123 69 is_stmt 0 view .LVU40
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 11
+
+
+ 178 0014 4C68     		ldr	r4, [r1, #4]
+ 123:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
+ 179              		.loc 1 123 57 view .LVU41
+ 180 0016 DC61     		str	r4, [r3, #28]
+ 124:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = pCallbacks->USBPD_PHY_ResetCompleted;
+ 181              		.loc 1 124 3 is_stmt 1 view .LVU42
+ 124:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = pCallbacks->USBPD_PHY_ResetCompleted;
+ 182              		.loc 1 124 57 is_stmt 0 view .LVU43
+ 183 0018 0A4C     		ldr	r4, .L10+4
+ 184 001a 1C62     		str	r4, [r3, #32]
+ 125:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_FRSReception        = pCallbacks->USBPD_PHY_FastRoleSwapRecepti
+ 185              		.loc 1 125 3 is_stmt 1 view .LVU44
+ 125:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   Ports[PortNum].cbs.USBPD_HW_IF_TX_FRSReception        = pCallbacks->USBPD_PHY_FastRoleSwapRecepti
+ 186              		.loc 1 125 57 is_stmt 0 view .LVU45
+ 187 001c 8C68     		ldr	r4, [r1, #8]
+ 188 001e 5C62     		str	r4, [r3, #36]
+ 126:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Initialize the hardware for the port */
+ 189              		.loc 1 126 3 is_stmt 1 view .LVU46
+ 126:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Initialize the hardware for the port */
+ 190              		.loc 1 126 57 is_stmt 0 view .LVU47
+ 191 0020 4C69     		ldr	r4, [r1, #20]
+ 192 0022 9C62     		str	r4, [r3, #40]
+ 128:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 193              		.loc 1 128 3 is_stmt 1 view .LVU48
+ 128:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 194              		.loc 1 128 29 is_stmt 0 view .LVU49
+ 195 0024 1A63     		str	r2, [r3, #48]
+ 131:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].USBPD_PHY_MessageReceived = pCallbacks->USBPD_PHY_MessageReceived;
+ 196              		.loc 1 131 3 is_stmt 1 view .LVU50
+ 131:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].USBPD_PHY_MessageReceived = pCallbacks->USBPD_PHY_MessageReceived;
+ 197              		.loc 1 131 35 is_stmt 0 view .LVU51
+ 198 0026 084B     		ldr	r3, .L10+8
+ 199 0028 03EBC002 		add	r2, r3, r0, lsl #3
+ 200              	.LVL14:
+ 131:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].USBPD_PHY_MessageReceived = pCallbacks->USBPD_PHY_MessageReceived;
+ 201              		.loc 1 131 35 view .LVU52
+ 202 002c 019C     		ldr	r4, [sp, #4]
+ 203 002e 5460     		str	r4, [r2, #4]
+ 132:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 204              		.loc 1 132 3 is_stmt 1 view .LVU53
+ 132:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 205              		.loc 1 132 60 is_stmt 0 view .LVU54
+ 206 0030 0A68     		ldr	r2, [r1]
+ 132:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 207              		.loc 1 132 48 view .LVU55
+ 208 0032 43F83020 		str	r2, [r3, r0, lsl #3]
+ 134:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 209              		.loc 1 134 3 is_stmt 1 view .LVU56
+ 135:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 210              		.loc 1 135 1 is_stmt 0 view .LVU57
+ 211 0036 0020     		movs	r0, #0
+ 212              	.LVL15:
+ 135:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 213              		.loc 1 135 1 view .LVU58
+ 214 0038 5DF8044B 		ldr	r4, [sp], #4
+ 215              	.LCFI5:
+ 216              		.cfi_restore 4
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 12
+
+
+ 217              		.cfi_def_cfa_offset 0
+ 218              	.LVL16:
+ 135:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 219              		.loc 1 135 1 view .LVU59
+ 220 003c 7047     		bx	lr
+ 221              	.L11:
+ 222 003e 00BF     		.align	2
+ 223              	.L10:
+ 224 0040 00000000 		.word	Ports
+ 225 0044 00000000 		.word	PHY_Rx_Completed
+ 226 0048 00000000 		.word	.LANCHOR1
+ 227              		.cfi_endproc
+ 228              	.LFE947:
+ 230              		.section	.text.USBPD_PHY_GetRetryTimerValue,"ax",%progbits
+ 231              		.align	1
+ 232              		.global	USBPD_PHY_GetRetryTimerValue
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 237              	USBPD_PHY_GetRetryTimerValue:
+ 238              	.LVL17:
+ 239              	.LFB948:
+ 144:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PortNum;
+ 240              		.loc 1 144 1 is_stmt 1 view -0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              		@ link register save eliminated.
+ 145:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return 905u;
+ 245              		.loc 1 145 3 view .LVU61
+ 146:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 246              		.loc 1 146 3 view .LVU62
+ 147:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 247              		.loc 1 147 1 is_stmt 0 view .LVU63
+ 248 0000 40F28930 		movw	r0, #905
+ 249              	.LVL18:
+ 147:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 250              		.loc 1 147 1 view .LVU64
+ 251 0004 7047     		bx	lr
+ 252              		.cfi_endproc
+ 253              	.LFE948:
+ 255              		.section	.text.USBPD_PHY_GetMinGOODCRCTimerValue,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	USBPD_PHY_GetMinGOODCRCTimerValue
+ 258              		.syntax unified
+ 259              		.thumb
+ 260              		.thumb_func
+ 262              	USBPD_PHY_GetMinGOODCRCTimerValue:
+ 263              	.LVL19:
+ 264              	.LFB949:
+ 156:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return 30u;
+ 265              		.loc 1 156 1 is_stmt 1 view -0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              		@ link register save eliminated.
+ 157:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 13
+
+
+ 270              		.loc 1 157 3 view .LVU66
+ 158:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 271              		.loc 1 158 1 is_stmt 0 view .LVU67
+ 272 0000 1E20     		movs	r0, #30
+ 273              	.LVL20:
+ 158:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 274              		.loc 1 158 1 view .LVU68
+ 275 0002 7047     		bx	lr
+ 276              		.cfi_endproc
+ 277              	.LFE949:
+ 279              		.section	.text.USBPD_PHY_Reset,"ax",%progbits
+ 280              		.align	1
+ 281              		.global	USBPD_PHY_Reset
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 286              	USBPD_PHY_Reset:
+ 287              	.LVL21:
+ 288              	.LFB950:
+ 166:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   (void)PortNum;
+ 289              		.loc 1 166 1 is_stmt 1 view -0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              		@ link register save eliminated.
+ 167:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* reset PHY layer   */
+ 294              		.loc 1 167 3 view .LVU70
+ 170:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 295              		.loc 1 170 1 is_stmt 0 view .LVU71
+ 296 0000 7047     		bx	lr
+ 297              		.cfi_endproc
+ 298              	.LFE950:
+ 300              		.section	.text.USBPD_PHY_SendMessage,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	USBPD_PHY_SendMessage
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 307              	USBPD_PHY_SendMessage:
+ 308              	.LVL22:
+ 309              	.LFB952:
+ 193:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Trace to track message */
+ 310              		.loc 1 193 1 is_stmt 1 view -0
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 0
+ 313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Trace to track message */
+ 314              		.loc 1 193 1 is_stmt 0 view .LVU73
+ 315 0000 08B5     		push	{r3, lr}
+ 316              	.LCFI6:
+ 317              		.cfi_def_cfa_offset 8
+ 318              		.cfi_offset 3, -8
+ 319              		.cfi_offset 14, -4
+ 195:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 320              		.loc 1 195 3 is_stmt 1 view .LVU74
+ 195:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 321              		.loc 1 195 10 is_stmt 0 view .LVU75
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 14
+
+
+ 322 0002 FFF7FEFF 		bl	USBPD_HW_IF_SendBuffer
+ 323              	.LVL23:
+ 196:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 324              		.loc 1 196 1 view .LVU76
+ 325 0006 08BD     		pop	{r3, pc}
+ 326              		.cfi_endproc
+ 327              	.LFE952:
+ 329              		.section	.text.USBPD_PHY_ResetRequest,"ax",%progbits
+ 330              		.align	1
+ 331              		.global	USBPD_PHY_ResetRequest
+ 332              		.syntax unified
+ 333              		.thumb
+ 334              		.thumb_func
+ 336              	USBPD_PHY_ResetRequest:
+ 337              	.LVL24:
+ 338              	.LFB951:
+ 179:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Send the requested reset */
+ 339              		.loc 1 179 1 is_stmt 1 view -0
+ 340              		.cfi_startproc
+ 341              		@ args = 0, pretend = 0, frame = 0
+ 342              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Send the requested reset */
+ 343              		.loc 1 179 1 is_stmt 0 view .LVU78
+ 344 0000 08B5     		push	{r3, lr}
+ 345              	.LCFI7:
+ 346              		.cfi_def_cfa_offset 8
+ 347              		.cfi_offset 3, -8
+ 348              		.cfi_offset 14, -4
+ 181:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 349              		.loc 1 181 3 is_stmt 1 view .LVU79
+ 181:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 350              		.loc 1 181 10 is_stmt 0 view .LVU80
+ 351 0002 0023     		movs	r3, #0
+ 352 0004 1A46     		mov	r2, r3
+ 353 0006 FFF7FEFF 		bl	USBPD_PHY_SendMessage
+ 354              	.LVL25:
+ 182:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 355              		.loc 1 182 1 view .LVU81
+ 356 000a 08BD     		pop	{r3, pc}
+ 357              		.cfi_endproc
+ 358              	.LFE951:
+ 360              		.section	.text.USBPD_PHY_Send_BIST_Pattern,"ax",%progbits
+ 361              		.align	1
+ 362              		.global	USBPD_PHY_Send_BIST_Pattern
+ 363              		.syntax unified
+ 364              		.thumb
+ 365              		.thumb_func
+ 367              	USBPD_PHY_Send_BIST_Pattern:
+ 368              	.LVL26:
+ 369              	.LFB953:
+ 204:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Call the low-level function (HW_IF) to accomplish the BIST Carrier Mode Transmission */
+ 370              		.loc 1 204 1 is_stmt 1 view -0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   /* Call the low-level function (HW_IF) to accomplish the BIST Carrier Mode Transmission */
+ 374              		.loc 1 204 1 is_stmt 0 view .LVU83
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 15
+
+
+ 375 0000 08B5     		push	{r3, lr}
+ 376              	.LCFI8:
+ 377              		.cfi_def_cfa_offset 8
+ 378              		.cfi_offset 3, -8
+ 379              		.cfi_offset 14, -4
+ 206:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_OK;
+ 380              		.loc 1 206 3 is_stmt 1 view .LVU84
+ 381 0002 FFF7FEFF 		bl	USBPD_HW_IF_Send_BIST_Pattern
+ 382              	.LVL27:
+ 207:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 383              		.loc 1 207 3 view .LVU85
+ 208:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 384              		.loc 1 208 1 is_stmt 0 view .LVU86
+ 385 0006 0020     		movs	r0, #0
+ 386 0008 08BD     		pop	{r3, pc}
+ 387              		.cfi_endproc
+ 388              	.LFE953:
+ 390              		.section	.text.USBPD_PHY_ExitTransmit,"ax",%progbits
+ 391              		.align	1
+ 392              		.global	USBPD_PHY_ExitTransmit
+ 393              		.syntax unified
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	USBPD_PHY_ExitTransmit:
+ 398              	.LVL28:
+ 399              	.LFB954:
+ 217:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   if (USBPD_SOPTYPE_BIST_MODE_2 == mode)
+ 400              		.loc 1 217 1 is_stmt 1 view -0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+ 218:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   {
+ 404              		.loc 1 218 3 view .LVU88
+ 218:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   {
+ 405              		.loc 1 218 6 is_stmt 0 view .LVU89
+ 406 0000 0729     		cmp	r1, #7
+ 407 0002 01D0     		beq	.L27
+ 222:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 408              		.loc 1 222 3 is_stmt 1 view .LVU90
+ 223:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 409              		.loc 1 223 1 is_stmt 0 view .LVU91
+ 410 0004 0020     		movs	r0, #0
+ 411              	.LVL29:
+ 223:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 412              		.loc 1 223 1 view .LVU92
+ 413 0006 7047     		bx	lr
+ 414              	.LVL30:
+ 415              	.L27:
+ 217:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   if (USBPD_SOPTYPE_BIST_MODE_2 == mode)
+ 416              		.loc 1 217 1 view .LVU93
+ 417 0008 08B5     		push	{r3, lr}
+ 418              	.LCFI9:
+ 419              		.cfi_def_cfa_offset 8
+ 420              		.cfi_offset 3, -8
+ 421              		.cfi_offset 14, -4
+ 220:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   }
+ 422              		.loc 1 220 5 is_stmt 1 view .LVU94
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 16
+
+
+ 423 000a FFF7FEFF 		bl	USBPD_HW_IF_StopBISTMode2
+ 424              	.LVL31:
+ 222:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 425              		.loc 1 222 3 view .LVU95
+ 223:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 426              		.loc 1 223 1 is_stmt 0 view .LVU96
+ 427 000e 0020     		movs	r0, #0
+ 428 0010 08BD     		pop	{r3, pc}
+ 429              		.cfi_endproc
+ 430              	.LFE954:
+ 432              		.section	.text.USBPD_PHY_SetResistor_SinkTxNG,"ax",%progbits
+ 433              		.align	1
+ 434              		.global	USBPD_PHY_SetResistor_SinkTxNG
+ 435              		.syntax unified
+ 436              		.thumb
+ 437              		.thumb_func
+ 439              	USBPD_PHY_SetResistor_SinkTxNG:
+ 440              	.LVL32:
+ 441              	.LFB955:
+ 232:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxNG(PortNum);
+ 442              		.loc 1 232 1 is_stmt 1 view -0
+ 443              		.cfi_startproc
+ 444              		@ args = 0, pretend = 0, frame = 0
+ 445              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxNG(PortNum);
+ 446              		.loc 1 232 1 is_stmt 0 view .LVU98
+ 447 0000 08B5     		push	{r3, lr}
+ 448              	.LCFI10:
+ 449              		.cfi_def_cfa_offset 8
+ 450              		.cfi_offset 3, -8
+ 451              		.cfi_offset 14, -4
+ 233:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 452              		.loc 1 233 3 is_stmt 1 view .LVU99
+ 453 0002 FFF7FEFF 		bl	USBPD_HW_IF_SetResistor_SinkTxNG
+ 454              	.LVL33:
+ 234:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 455              		.loc 1 234 1 is_stmt 0 view .LVU100
+ 456 0006 08BD     		pop	{r3, pc}
+ 457              		.cfi_endproc
+ 458              	.LFE955:
+ 460              		.section	.text.USBPD_PHY_SetResistor_SinkTxOK,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	USBPD_PHY_SetResistor_SinkTxOK
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	USBPD_PHY_SetResistor_SinkTxOK:
+ 468              	.LVL34:
+ 469              	.LFB956:
+ 243:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxOK(PortNum);
+ 470              		.loc 1 243 1 is_stmt 1 view -0
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 0
+ 473              		@ frame_needed = 0, uses_anonymous_args = 0
+ 243:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_SetResistor_SinkTxOK(PortNum);
+ 474              		.loc 1 243 1 is_stmt 0 view .LVU102
+ 475 0000 08B5     		push	{r3, lr}
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 17
+
+
+ 476              	.LCFI11:
+ 477              		.cfi_def_cfa_offset 8
+ 478              		.cfi_offset 3, -8
+ 479              		.cfi_offset 14, -4
+ 244:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 480              		.loc 1 244 3 is_stmt 1 view .LVU103
+ 481 0002 FFF7FEFF 		bl	USBPD_HW_IF_SetResistor_SinkTxOK
+ 482              	.LVL35:
+ 245:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 483              		.loc 1 245 1 is_stmt 0 view .LVU104
+ 484 0006 08BD     		pop	{r3, pc}
+ 485              		.cfi_endproc
+ 486              	.LFE956:
+ 488              		.section	.text.USBPD_PHY_SOPSupported,"ax",%progbits
+ 489              		.align	1
+ 490              		.global	USBPD_PHY_SOPSupported
+ 491              		.syntax unified
+ 492              		.thumb
+ 493              		.thumb_func
+ 495              	USBPD_PHY_SOPSupported:
+ 496              	.LVL36:
+ 497              	.LFB957:
+ 254:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   PHY_Ports[PortNum].SupportedSOP = SOPSupported;
+ 498              		.loc 1 254 1 is_stmt 1 view -0
+ 499              		.cfi_startproc
+ 500              		@ args = 0, pretend = 0, frame = 0
+ 501              		@ frame_needed = 0, uses_anonymous_args = 0
+ 502              		@ link register save eliminated.
+ 255:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 503              		.loc 1 255 3 view .LVU106
+ 255:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 504              		.loc 1 255 35 is_stmt 0 view .LVU107
+ 505 0000 024B     		ldr	r3, .L33
+ 506 0002 03EBC003 		add	r3, r3, r0, lsl #3
+ 507 0006 5960     		str	r1, [r3, #4]
+ 256:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 508              		.loc 1 256 1 view .LVU108
+ 509 0008 7047     		bx	lr
+ 510              	.L34:
+ 511 000a 00BF     		.align	2
+ 512              	.L33:
+ 513 000c 00000000 		.word	.LANCHOR1
+ 514              		.cfi_endproc
+ 515              	.LFE957:
+ 517              		.section	.text.USBPD_PHY_IsResistor_SinkTxOk,"ax",%progbits
+ 518              		.align	1
+ 519              		.global	USBPD_PHY_IsResistor_SinkTxOk
+ 520              		.syntax unified
+ 521              		.thumb
+ 522              		.thumb_func
+ 524              	USBPD_PHY_IsResistor_SinkTxOk:
+ 525              	.LVL37:
+ 526              	.LFB958:
+ 265:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_HW_IF_IsResistor_SinkTxOk(PortNum);
+ 527              		.loc 1 265 1 is_stmt 1 view -0
+ 528              		.cfi_startproc
+ 529              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 18
+
+
+ 530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 265:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   return USBPD_HW_IF_IsResistor_SinkTxOk(PortNum);
+ 531              		.loc 1 265 1 is_stmt 0 view .LVU110
+ 532 0000 08B5     		push	{r3, lr}
+ 533              	.LCFI12:
+ 534              		.cfi_def_cfa_offset 8
+ 535              		.cfi_offset 3, -8
+ 536              		.cfi_offset 14, -4
+ 266:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 537              		.loc 1 266 3 is_stmt 1 view .LVU111
+ 266:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 538              		.loc 1 266 10 is_stmt 0 view .LVU112
+ 539 0002 FFF7FEFF 		bl	USBPD_HW_IF_IsResistor_SinkTxOk
+ 540              	.LVL38:
+ 267:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 541              		.loc 1 267 1 view .LVU113
+ 542 0006 08BD     		pop	{r3, pc}
+ 543              		.cfi_endproc
+ 544              	.LFE958:
+ 546              		.section	.text.USBPD_PHY_FastRoleSwapSignalling,"ax",%progbits
+ 547              		.align	1
+ 548              		.global	USBPD_PHY_FastRoleSwapSignalling
+ 549              		.syntax unified
+ 550              		.thumb
+ 551              		.thumb_func
+ 553              	USBPD_PHY_FastRoleSwapSignalling:
+ 554              	.LVL39:
+ 555              	.LFB959:
+ 275:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_FastRoleSwapSignalling(PortNum);
+ 556              		.loc 1 275 1 is_stmt 1 view -0
+ 557              		.cfi_startproc
+ 558              		@ args = 0, pretend = 0, frame = 0
+ 559              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_FastRoleSwapSignalling(PortNum);
+ 560              		.loc 1 275 1 is_stmt 0 view .LVU115
+ 561 0000 08B5     		push	{r3, lr}
+ 562              	.LCFI13:
+ 563              		.cfi_def_cfa_offset 8
+ 564              		.cfi_offset 3, -8
+ 565              		.cfi_offset 14, -4
+ 276:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 566              		.loc 1 276 3 is_stmt 1 view .LVU116
+ 567 0002 FFF7FEFF 		bl	USBPD_HW_IF_FastRoleSwapSignalling
+ 568              	.LVL40:
+ 277:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 569              		.loc 1 277 1 is_stmt 0 view .LVU117
+ 570 0006 08BD     		pop	{r3, pc}
+ 571              		.cfi_endproc
+ 572              	.LFE959:
+ 574              		.section	.text.USBPD_PHY_EnableRX,"ax",%progbits
+ 575              		.align	1
+ 576              		.global	USBPD_PHY_EnableRX
+ 577              		.syntax unified
+ 578              		.thumb
+ 579              		.thumb_func
+ 581              	USBPD_PHY_EnableRX:
+ 582              	.LVL41:
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 19
+
+
+ 583              	.LFB960:
+ 285:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_EnableRX(PortNum);
+ 584              		.loc 1 285 1 is_stmt 1 view -0
+ 585              		.cfi_startproc
+ 586              		@ args = 0, pretend = 0, frame = 0
+ 587              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_EnableRX(PortNum);
+ 588              		.loc 1 285 1 is_stmt 0 view .LVU119
+ 589 0000 08B5     		push	{r3, lr}
+ 590              	.LCFI14:
+ 591              		.cfi_def_cfa_offset 8
+ 592              		.cfi_offset 3, -8
+ 593              		.cfi_offset 14, -4
+ 286:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 594              		.loc 1 286 3 is_stmt 1 view .LVU120
+ 595 0002 FFF7FEFF 		bl	USBPD_HW_IF_EnableRX
+ 596              	.LVL42:
+ 287:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 597              		.loc 1 287 1 is_stmt 0 view .LVU121
+ 598 0006 08BD     		pop	{r3, pc}
+ 599              		.cfi_endproc
+ 600              	.LFE960:
+ 602              		.section	.text.USBPD_PHY_DisableRX,"ax",%progbits
+ 603              		.align	1
+ 604              		.global	USBPD_PHY_DisableRX
+ 605              		.syntax unified
+ 606              		.thumb
+ 607              		.thumb_func
+ 609              	USBPD_PHY_DisableRX:
+ 610              	.LVL43:
+ 611              	.LFB961:
+ 295:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_DisableRX(PortNum);
+ 612              		.loc 1 295 1 is_stmt 1 view -0
+ 613              		.cfi_startproc
+ 614              		@ args = 0, pretend = 0, frame = 0
+ 615              		@ frame_needed = 0, uses_anonymous_args = 0
+ 295:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c ****   USBPD_HW_IF_DisableRX(PortNum);
+ 616              		.loc 1 295 1 is_stmt 0 view .LVU123
+ 617 0000 08B5     		push	{r3, lr}
+ 618              	.LCFI15:
+ 619              		.cfi_def_cfa_offset 8
+ 620              		.cfi_offset 3, -8
+ 621              		.cfi_offset 14, -4
+ 296:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** }
+ 622              		.loc 1 296 3 is_stmt 1 view .LVU124
+ 623 0002 FFF7FEFF 		bl	USBPD_HW_IF_DisableRX
+ 624              	.LVL44:
+ 297:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c **** 
+ 625              		.loc 1 297 1 is_stmt 0 view .LVU125
+ 626 0006 08BD     		pop	{r3, pc}
+ 627              		.cfi_endproc
+ 628              	.LFE961:
+ 630              		.section	.rodata
+ 631              		.align	2
+ 632              		.set	.LANCHOR0,. + 0
+ 633              	.LC0:
+ 634 0000 00010203 		.ascii	"\000\001\002\003\004\006"
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 20
+
+
+ 634      0406
+ 635              		.section	.bss.PHY_Ports,"aw",%nobits
+ 636              		.align	2
+ 637              		.set	.LANCHOR1,. + 0
+ 640              	PHY_Ports:
+ 641 0000 00000000 		.space	8
+ 641      00000000 
+ 642              		.text
+ 643              	.Letext0:
+ 644              		.file 2 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/machine/_de
+ 645              		.file 3 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/sys/_stdint
+ 646              		.file 4 "Middlewares/ST/STM32_USBPD_Library/Core/inc/usbpd_def.h"
+ 647              		.file 5 "Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/inc/usbpd_phy.h"
+ 648              		.file 6 "Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h"
+ 649              		.file 7 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dma.h"
+ 650              		.file 8 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_tim.h"
+ 651              		.file 9 "Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/inc/usbpd_hw_if.h"
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usbpd_phy.c
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:20     .text.PHY_Rx_Completed:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:26     .text.PHY_Rx_Completed:0000000000000000 PHY_Rx_Completed
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:134    .text.PHY_Rx_Completed:000000000000006c $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:141    .text.USBPD_PHY_Init:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:147    .text.USBPD_PHY_Init:0000000000000000 USBPD_PHY_Init
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:224    .text.USBPD_PHY_Init:0000000000000040 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:231    .text.USBPD_PHY_GetRetryTimerValue:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:237    .text.USBPD_PHY_GetRetryTimerValue:0000000000000000 USBPD_PHY_GetRetryTimerValue
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:256    .text.USBPD_PHY_GetMinGOODCRCTimerValue:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:262    .text.USBPD_PHY_GetMinGOODCRCTimerValue:0000000000000000 USBPD_PHY_GetMinGOODCRCTimerValue
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:280    .text.USBPD_PHY_Reset:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:286    .text.USBPD_PHY_Reset:0000000000000000 USBPD_PHY_Reset
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:301    .text.USBPD_PHY_SendMessage:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:307    .text.USBPD_PHY_SendMessage:0000000000000000 USBPD_PHY_SendMessage
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:330    .text.USBPD_PHY_ResetRequest:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:336    .text.USBPD_PHY_ResetRequest:0000000000000000 USBPD_PHY_ResetRequest
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:361    .text.USBPD_PHY_Send_BIST_Pattern:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:367    .text.USBPD_PHY_Send_BIST_Pattern:0000000000000000 USBPD_PHY_Send_BIST_Pattern
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:391    .text.USBPD_PHY_ExitTransmit:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:397    .text.USBPD_PHY_ExitTransmit:0000000000000000 USBPD_PHY_ExitTransmit
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:433    .text.USBPD_PHY_SetResistor_SinkTxNG:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:439    .text.USBPD_PHY_SetResistor_SinkTxNG:0000000000000000 USBPD_PHY_SetResistor_SinkTxNG
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:461    .text.USBPD_PHY_SetResistor_SinkTxOK:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:467    .text.USBPD_PHY_SetResistor_SinkTxOK:0000000000000000 USBPD_PHY_SetResistor_SinkTxOK
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:489    .text.USBPD_PHY_SOPSupported:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:495    .text.USBPD_PHY_SOPSupported:0000000000000000 USBPD_PHY_SOPSupported
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:513    .text.USBPD_PHY_SOPSupported:000000000000000c $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:518    .text.USBPD_PHY_IsResistor_SinkTxOk:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:524    .text.USBPD_PHY_IsResistor_SinkTxOk:0000000000000000 USBPD_PHY_IsResistor_SinkTxOk
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:547    .text.USBPD_PHY_FastRoleSwapSignalling:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:553    .text.USBPD_PHY_FastRoleSwapSignalling:0000000000000000 USBPD_PHY_FastRoleSwapSignalling
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:575    .text.USBPD_PHY_EnableRX:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:581    .text.USBPD_PHY_EnableRX:0000000000000000 USBPD_PHY_EnableRX
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:603    .text.USBPD_PHY_DisableRX:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:609    .text.USBPD_PHY_DisableRX:0000000000000000 USBPD_PHY_DisableRX
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:631    .rodata:0000000000000000 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:636    .bss.PHY_Ports:0000000000000000 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//cctVTCn4.s:640    .bss.PHY_Ports:0000000000000000 PHY_Ports
+
+UNDEFINED SYMBOLS
+Ports
+USBPD_HW_IF_SendBuffer
+USBPD_HW_IF_Send_BIST_Pattern
+USBPD_HW_IF_StopBISTMode2
+USBPD_HW_IF_SetResistor_SinkTxNG
+USBPD_HW_IF_SetResistor_SinkTxOK
+USBPD_HW_IF_IsResistor_SinkTxOk
+USBPD_HW_IF_FastRoleSwapSignalling
+USBPD_HW_IF_EnableRX
+USBPD_HW_IF_DisableRX

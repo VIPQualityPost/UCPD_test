@@ -1,0 +1,796 @@
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"usbpd_hw.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.USBPD_HW_GetUSPDInstance,"ax",%progbits
+  20              		.align	1
+  21              		.global	USBPD_HW_GetUSPDInstance
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	USBPD_HW_GetUSPDInstance:
+  27              	.LVL0:
+  28              	.LFB947:
+  29              		.file 1 "Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c"
+   1:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /**
+   2:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   ******************************************************************************
+   3:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * @file    usbpd_phy_hw_if.c
+   4:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * @author  MCD Application Team
+   5:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * @brief   This file contains phy interface control functions.
+   6:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   ******************************************************************************
+   7:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * @attention
+   8:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   *
+   9:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * Copyright (c) 2019 STMicroelectronics.
+  10:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * All rights reserved.
+  11:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   *
+  12:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * in the root directory of this software component.
+  14:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   *
+  16:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   ******************************************************************************
+  17:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   */
+  18:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  19:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** #define USBPD_HW_C
+  20:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /* Includes ------------------------------------------------------------------*/
+  21:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** #include "usbpd_devices_conf.h"
+  22:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** #include "usbpd_hw.h"
+  23:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  24:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /* Private typedef -----------------------------------------------------------*/
+  25:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /* Variable containing ADC conversions results */
+  26:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /* Private function prototypes -----------------------------------------------*/
+  27:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** /* Private functions ---------------------------------------------------------*/
+  28:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  29:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** UCPD_TypeDef *USBPD_HW_GetUSPDInstance(uint8_t PortNum)
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 2
+
+
+  30:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+  30              		.loc 1 30 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  31:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   return UCPD_INSTANCE0;
+  35              		.loc 1 31 3 view .LVU1
+  32:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+  36              		.loc 1 32 1 is_stmt 0 view .LVU2
+  37 0000 0048     		ldr	r0, .L2
+  38              	.LVL1:
+  39              		.loc 1 32 1 view .LVU3
+  40 0002 7047     		bx	lr
+  41              	.L3:
+  42              		.align	2
+  43              	.L2:
+  44 0004 00A00040 		.word	1073782784
+  45              		.cfi_endproc
+  46              	.LFE947:
+  48              		.section	.text.USBPD_HW_Init_DMARxInstance,"ax",%progbits
+  49              		.align	1
+  50              		.global	USBPD_HW_Init_DMARxInstance
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	USBPD_HW_Init_DMARxInstance:
+  56              	.LVL2:
+  57              	.LFB948:
+  33:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  34:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** DMA_Channel_TypeDef *USBPD_HW_Init_DMARxInstance(uint8_t PortNum)
+  35:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+  58              		.loc 1 35 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 48
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		.loc 1 35 1 is_stmt 0 view .LVU5
+  63 0000 00B5     		push	{lr}
+  64              	.LCFI0:
+  65              		.cfi_def_cfa_offset 4
+  66              		.cfi_offset 14, -4
+  67 0002 8DB0     		sub	sp, sp, #52
+  68              	.LCFI1:
+  69              		.cfi_def_cfa_offset 56
+  36:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   LL_DMA_InitTypeDef DMA_InitStruct;
+  70              		.loc 1 36 3 is_stmt 1 view .LVU6
+  37:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  38:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Initialise the DMA */
+  39:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   LL_DMA_StructInit(&DMA_InitStruct);
+  71              		.loc 1 39 3 view .LVU7
+  72 0004 01A8     		add	r0, sp, #4
+  73              	.LVL3:
+  74              		.loc 1 39 3 is_stmt 0 view .LVU8
+  75 0006 FFF7FEFF 		bl	LL_DMA_StructInit
+  76              	.LVL4:
+  40:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
+  77              		.loc 1 40 3 is_stmt 1 view .LVU9
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 3
+
+
+  78              		.loc 1 40 28 is_stmt 0 view .LVU10
+  79 000a 0021     		movs	r1, #0
+  80 000c 0391     		str	r1, [sp, #12]
+  41:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Mode = LL_DMA_MODE_NORMAL;
+  81              		.loc 1 41 3 is_stmt 1 view .LVU11
+  82              		.loc 1 41 23 is_stmt 0 view .LVU12
+  83 000e 0491     		str	r1, [sp, #16]
+  42:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
+  84              		.loc 1 42 3 is_stmt 1 view .LVU13
+  85              		.loc 1 42 40 is_stmt 0 view .LVU14
+  86 0010 0591     		str	r1, [sp, #20]
+  43:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
+  87              		.loc 1 43 3 is_stmt 1 view .LVU15
+  88              		.loc 1 43 40 is_stmt 0 view .LVU16
+  89 0012 8023     		movs	r3, #128
+  90 0014 0693     		str	r3, [sp, #24]
+  44:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;
+  91              		.loc 1 44 3 is_stmt 1 view .LVU17
+  92              		.loc 1 44 41 is_stmt 0 view .LVU18
+  93 0016 0791     		str	r1, [sp, #28]
+  45:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_BYTE;
+  94              		.loc 1 45 3 is_stmt 1 view .LVU19
+  95              		.loc 1 45 41 is_stmt 0 view .LVU20
+  96 0018 0891     		str	r1, [sp, #32]
+  46:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.NbData = 0;
+  97              		.loc 1 46 3 is_stmt 1 view .LVU21
+  98              		.loc 1 46 25 is_stmt 0 view .LVU22
+  99 001a 0991     		str	r1, [sp, #36]
+  47:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstAddress = 0x0;
+ 100              		.loc 1 47 3 is_stmt 1 view .LVU23
+ 101              		.loc 1 47 40 is_stmt 0 view .LVU24
+ 102 001c 0291     		str	r1, [sp, #8]
+  48:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcAddress = 0x0;
+ 103              		.loc 1 48 3 is_stmt 1 view .LVU25
+ 104              		.loc 1 48 40 is_stmt 0 view .LVU26
+ 105 001e 0191     		str	r1, [sp, #4]
+  49:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Priority = LL_DMA_PRIORITY_HIGH;
+ 106              		.loc 1 49 3 is_stmt 1 view .LVU27
+ 107              		.loc 1 49 27 is_stmt 0 view .LVU28
+ 108 0020 4FF40053 		mov	r3, #8192
+ 109 0024 0B93     		str	r3, [sp, #44]
+  50:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  51:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Enable the clock */
+  52:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   UCPDDMA_INSTANCE0_CLOCKENABLE_RX;
+ 110              		.loc 1 52 3 is_stmt 1 view .LVU29
+ 111              	.LVL5:
+ 112              	.LBB6:
+ 113              	.LBI6:
+ 114              		.file 2 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h"
+   1:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+   2:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   ******************************************************************************
+   3:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @file    stm32g4xx_ll_bus.h
+   4:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @author  MCD Application Team
+   5:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @brief   Header file of BUS LL module.
+   6:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+   7:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   @verbatim
+   8:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****                       ##### RCC Limitations #####
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 4
+
+
+   9:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   ==============================================================================
+  10:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****     [..]
+  11:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       A delay between an RCC peripheral clock enable and the effective peripheral
+  12:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       enabling should be taken into account in order to manage the peripheral read/write
+  13:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       from/to registers.
+  14:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       (+) This delay depends on the peripheral mapping.
+  15:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****         (++) AHB & APB peripherals, 1 dummy read is necessary
+  16:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  17:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****     [..]
+  18:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       Workarounds:
+  19:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****       (#) For AHB & APB peripherals, a dummy read to the peripheral register has been
+  20:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****           inserted in each LL_{BUS}_GRP{x}_EnableClock() function.
+  21:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  22:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   @endverbatim
+  23:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   ******************************************************************************
+  24:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @attention
+  25:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *
+  26:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * Copyright (c) 2019 STMicroelectronics.
+  27:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * All rights reserved.
+  28:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *
+  29:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * This software is licensed under terms that can be found in the LICENSE file in
+  30:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * the root directory of this software component.
+  31:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  32:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   ******************************************************************************
+  33:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  34:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  35:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Define to prevent recursive inclusion -------------------------------------*/
+  36:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #ifndef STM32G4xx_LL_BUS_H
+  37:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define STM32G4xx_LL_BUS_H
+  38:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  39:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #ifdef __cplusplus
+  40:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** extern "C" {
+  41:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif
+  42:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  43:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Includes ------------------------------------------------------------------*/
+  44:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #include "stm32g4xx.h"
+  45:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  46:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @addtogroup STM32G4xx_LL_Driver
+  47:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+  48:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  49:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  50:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(RCC)
+  51:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  52:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL BUS
+  53:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+  54:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  55:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  56:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Private types -------------------------------------------------------------*/
+  57:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Private variables ---------------------------------------------------------*/
+  58:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  59:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Private constants ---------------------------------------------------------*/
+  60:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  61:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Private macros ------------------------------------------------------------*/
+  62:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  63:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Exported types ------------------------------------------------------------*/
+  64:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Exported constants --------------------------------------------------------*/
+  65:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_Exported_Constants BUS Exported Constants
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 5
+
+
+  66:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+  67:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  68:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  69:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_AHB1_GRP1_PERIPH  AHB1 GRP1 PERIPH
+  70:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+  71:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  72:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_ALL            0xFFFFFFFFU
+  73:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_DMA1           RCC_AHB1ENR_DMA1EN
+  74:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_DMA2           RCC_AHB1ENR_DMA2EN
+  75:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_DMAMUX1        RCC_AHB1ENR_DMAMUX1EN
+  76:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_CORDIC         RCC_AHB1ENR_CORDICEN
+  77:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_FMAC           RCC_AHB1ENR_FMACEN
+  78:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_FLASH          RCC_AHB1ENR_FLASHEN
+  79:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_SRAM1          RCC_AHB1SMENR_SRAM1SMEN
+  80:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB1_GRP1_PERIPH_CRC            RCC_AHB1ENR_CRCEN
+  81:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+  82:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+  83:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  84:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+  85:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_AHB2_GRP1_PERIPH  AHB2 GRP1 PERIPH
+  86:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+  87:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+  88:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_ALL            0xFFFFFFFFU
+  89:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOA          RCC_AHB2ENR_GPIOAEN
+  90:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOB          RCC_AHB2ENR_GPIOBEN
+  91:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOC          RCC_AHB2ENR_GPIOCEN
+  92:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOD          RCC_AHB2ENR_GPIODEN
+  93:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOE          RCC_AHB2ENR_GPIOEEN
+  94:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOF          RCC_AHB2ENR_GPIOFEN
+  95:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_GPIOG          RCC_AHB2ENR_GPIOGEN
+  96:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_CCM            RCC_AHB2SMENR_CCMSMEN
+  97:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_SRAM2          RCC_AHB2SMENR_SRAM2SMEN
+  98:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_ADC12          RCC_AHB2ENR_ADC12EN
+  99:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(ADC345_COMMON)
+ 100:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_ADC345         RCC_AHB2ENR_ADC345EN
+ 101:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* ADC345_COMMON */
+ 102:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_DAC1           RCC_AHB2ENR_DAC1EN
+ 103:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(DAC2)
+ 104:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_DAC2           RCC_AHB2ENR_DAC2EN
+ 105:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* DAC2 */
+ 106:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_DAC3           RCC_AHB2ENR_DAC3EN
+ 107:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(DAC4)
+ 108:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_DAC4           RCC_AHB2ENR_DAC4EN
+ 109:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* DAC4 */
+ 110:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(AES)
+ 111:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_AES            RCC_AHB2ENR_AESEN
+ 112:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* AES */
+ 113:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB2_GRP1_PERIPH_RNG            RCC_AHB2ENR_RNGEN
+ 114:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 115:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 116:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 117:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 118:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_AHB3_GRP1_PERIPH  AHB3 GRP1 PERIPH
+ 119:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 120:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 121:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_ALL            0xFFFFFFFFU
+ 122:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(FMC_Bank1_R)
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 6
+
+
+ 123:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_FMC            RCC_AHB3ENR_FMCEN
+ 124:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* FMC_Bank1_R */
+ 125:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(QUADSPI)
+ 126:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_QSPI           RCC_AHB3ENR_QSPIEN
+ 127:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* QUADSPI */
+ 128:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 129:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 130:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 131:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 132:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_APB1_GRP1_PERIPH  APB1 GRP1 PERIPH
+ 133:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 134:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 135:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_ALL            0xFFFFFFFFU
+ 136:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM2           RCC_APB1ENR1_TIM2EN
+ 137:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM3           RCC_APB1ENR1_TIM3EN
+ 138:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM4           RCC_APB1ENR1_TIM4EN
+ 139:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(TIM5)
+ 140:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM5           RCC_APB1ENR1_TIM5EN
+ 141:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* TIM5 */
+ 142:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM6           RCC_APB1ENR1_TIM6EN
+ 143:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM7           RCC_APB1ENR1_TIM7EN
+ 144:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_CRS            RCC_APB1ENR1_CRSEN
+ 145:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_RTCAPB         RCC_APB1ENR1_RTCAPBEN
+ 146:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_WWDG           RCC_APB1ENR1_WWDGEN
+ 147:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_SPI2           RCC_APB1ENR1_SPI2EN
+ 148:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_SPI3           RCC_APB1ENR1_SPI3EN
+ 149:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_USART2         RCC_APB1ENR1_USART2EN
+ 150:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_USART3         RCC_APB1ENR1_USART3EN
+ 151:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(UART4)
+ 152:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_UART4          RCC_APB1ENR1_UART4EN
+ 153:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* UART4 */
+ 154:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(UART5)
+ 155:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_UART5          RCC_APB1ENR1_UART5EN
+ 156:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* UART5 */
+ 157:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_I2C1           RCC_APB1ENR1_I2C1EN
+ 158:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_I2C2           RCC_APB1ENR1_I2C2EN
+ 159:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_USB            RCC_APB1ENR1_USBEN
+ 160:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(FDCAN1)
+ 161:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_FDCAN          RCC_APB1ENR1_FDCANEN
+ 162:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* FDCAN1 */
+ 163:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_PWR            RCC_APB1ENR1_PWREN
+ 164:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_I2C3           RCC_APB1ENR1_I2C3EN
+ 165:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_LPTIM1         RCC_APB1ENR1_LPTIM1EN
+ 166:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 167:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 168:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 169:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 170:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 171:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_APB1_GRP2_PERIPH  APB1 GRP2 PERIPH
+ 172:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 173:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 174:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP2_PERIPH_ALL            0xFFFFFFFFU
+ 175:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP2_PERIPH_LPUART1        RCC_APB1ENR2_LPUART1EN
+ 176:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(I2C4)
+ 177:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP2_PERIPH_I2C4           RCC_APB1ENR2_I2C4EN
+ 178:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* I2C4 */
+ 179:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB1_GRP2_PERIPH_UCPD1         RCC_APB1ENR2_UCPD1EN
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 7
+
+
+ 180:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 181:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 182:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 183:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 184:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EC_APB2_GRP1_PERIPH  APB2 GRP1 PERIPH
+ 185:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 186:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 187:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_ALL            0xFFFFFFFFU
+ 188:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_SYSCFG         RCC_APB2ENR_SYSCFGEN
+ 189:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM1           RCC_APB2ENR_TIM1EN
+ 190:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_SPI1           RCC_APB2ENR_SPI1EN
+ 191:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM8           RCC_APB2ENR_TIM8EN
+ 192:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_USART1         RCC_APB2ENR_USART1EN
+ 193:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(SPI4)
+ 194:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_SPI4           RCC_APB2ENR_SPI4EN
+ 195:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* SPI4 */
+ 196:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM15          RCC_APB2ENR_TIM15EN
+ 197:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM16          RCC_APB2ENR_TIM16EN
+ 198:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM17          RCC_APB2ENR_TIM17EN
+ 199:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(TIM20)
+ 200:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM20          RCC_APB2ENR_TIM20EN
+ 201:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* TIM20 */
+ 202:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_SAI1           RCC_APB2ENR_SAI1EN
+ 203:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #if defined(HRTIM1)
+ 204:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_HRTIM1         RCC_APB2ENR_HRTIM1EN
+ 205:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** #endif /* HRTIM1 */
+ 206:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 207:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 208:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 209:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 210:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 211:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @}
+ 212:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 213:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 214:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Exported macro ------------------------------------------------------------*/
+ 215:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /* Exported functions --------------------------------------------------------*/
+ 216:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_Exported_Functions BUS Exported Functions
+ 217:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 218:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 219:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 220:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /** @defgroup BUS_LL_EF_AHB1 AHB1
+ 221:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @{
+ 222:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 223:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** 
+ 224:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** /**
+ 225:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @brief  Enable AHB1 peripherals clock.
+ 226:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @rmtoll AHB1ENR      DMA1EN        LL_AHB1_GRP1_EnableClock\n
+ 227:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      DMA2EN        LL_AHB1_GRP1_EnableClock\n
+ 228:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      DMAMMUXEN     LL_AHB1_GRP1_EnableClock\n
+ 229:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      CORDICEN      LL_AHB1_GRP1_EnableClock\n
+ 230:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      FMACEN        LL_AHB1_GRP1_EnableClock\n
+ 231:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      FLASHEN       LL_AHB1_GRP1_EnableClock\n
+ 232:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         AHB1ENR      CRCEN         LL_AHB1_GRP1_EnableClock
+ 233:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
+ 234:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_DMA1
+ 235:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_DMA2
+ 236:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_DMAMUX1
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 8
+
+
+ 237:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_CORDIC
+ 238:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_FMAC
+ 239:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_FLASH
+ 240:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_CRC
+ 241:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   * @retval None
+ 242:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   */
+ 243:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** __STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)
+ 115              		.loc 2 243 22 view .LVU30
+ 116              	.LBB7:
+ 244:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** {
+ 245:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   __IO uint32_t tmpreg;
+ 117              		.loc 2 245 3 view .LVU31
+ 246:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   SET_BIT(RCC->AHB1ENR, Periphs);
+ 118              		.loc 2 246 3 view .LVU32
+ 119 0026 03F18043 		add	r3, r3, #1073741824
+ 120 002a 03F5F833 		add	r3, r3, #126976
+ 121 002e 9A6C     		ldr	r2, [r3, #72]
+ 122 0030 42F00102 		orr	r2, r2, #1
+ 123 0034 9A64     		str	r2, [r3, #72]
+ 247:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   /* Delay after an RCC peripheral clock enabling */
+ 248:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   tmpreg = READ_BIT(RCC->AHB1ENR, Periphs);
+ 124              		.loc 2 248 3 view .LVU33
+ 125              		.loc 2 248 12 is_stmt 0 view .LVU34
+ 126 0036 9B6C     		ldr	r3, [r3, #72]
+ 127 0038 03F00103 		and	r3, r3, #1
+ 128              		.loc 2 248 10 view .LVU35
+ 129 003c 0093     		str	r3, [sp]
+ 249:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   (void)tmpreg;
+ 130              		.loc 2 249 3 is_stmt 1 view .LVU36
+ 131 003e 009B     		ldr	r3, [sp]
+ 132              	.LVL6:
+ 133              		.loc 2 249 3 is_stmt 0 view .LVU37
+ 134              	.LBE7:
+ 135              	.LBE6:
+  53:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  54:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Initialise the DMA */
+  55:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphRequest = UCPDDMA_INSTANCE0_REQUEST_RX;
+ 136              		.loc 1 55 3 is_stmt 1 view .LVU38
+ 137              		.loc 1 55 32 is_stmt 0 view .LVU39
+ 138 0040 7223     		movs	r3, #114
+ 139 0042 0A93     		str	r3, [sp, #40]
+  56:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  57:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)LL_DMA_Init(UCPDDMA_INSTANCE0_DMA_RX, UCPDDMA_INSTANCE0_LL_CHANNEL_RX, &DMA_InitStruct);
+ 140              		.loc 1 57 3 is_stmt 1 view .LVU40
+ 141              		.loc 1 57 9 is_stmt 0 view .LVU41
+ 142 0044 01AA     		add	r2, sp, #4
+ 143 0046 0348     		ldr	r0, .L6
+ 144 0048 FFF7FEFF 		bl	LL_DMA_Init
+ 145              	.LVL7:
+  58:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   return UCPDDMA_INSTANCE0_CHANNEL_RX;
+ 146              		.loc 1 58 3 is_stmt 1 view .LVU42
+  59:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 147              		.loc 1 59 1 is_stmt 0 view .LVU43
+ 148 004c 0248     		ldr	r0, .L6+4
+ 149 004e 0DB0     		add	sp, sp, #52
+ 150              	.LCFI2:
+ 151              		.cfi_def_cfa_offset 4
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 9
+
+
+ 152              		@ sp needed
+ 153 0050 5DF804FB 		ldr	pc, [sp], #4
+ 154              	.L7:
+ 155              		.align	2
+ 156              	.L6:
+ 157 0054 00000240 		.word	1073872896
+ 158 0058 08000240 		.word	1073872904
+ 159              		.cfi_endproc
+ 160              	.LFE948:
+ 162              		.section	.text.USBPD_HW_DeInit_DMARxInstance,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	USBPD_HW_DeInit_DMARxInstance
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	USBPD_HW_DeInit_DMARxInstance:
+ 170              	.LVL8:
+ 171              	.LFB949:
+  60:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  61:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** void USBPD_HW_DeInit_DMARxInstance(uint8_t PortNum)
+  62:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+ 172              		.loc 1 62 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		@ link register save eliminated.
+  63:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)PortNum;
+ 177              		.loc 1 63 3 view .LVU45
+  64:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 178              		.loc 1 64 1 is_stmt 0 view .LVU46
+ 179 0000 7047     		bx	lr
+ 180              		.cfi_endproc
+ 181              	.LFE949:
+ 183              		.section	.text.USBPD_HW_Init_DMATxInstance,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	USBPD_HW_Init_DMATxInstance
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 190              	USBPD_HW_Init_DMATxInstance:
+ 191              	.LVL9:
+ 192              	.LFB950:
+  65:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  66:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** DMA_Channel_TypeDef *USBPD_HW_Init_DMATxInstance(uint8_t PortNum)
+  67:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+ 193              		.loc 1 67 1 is_stmt 1 view -0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 48
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197              		.loc 1 67 1 is_stmt 0 view .LVU48
+ 198 0000 00B5     		push	{lr}
+ 199              	.LCFI3:
+ 200              		.cfi_def_cfa_offset 4
+ 201              		.cfi_offset 14, -4
+ 202 0002 8DB0     		sub	sp, sp, #52
+ 203              	.LCFI4:
+ 204              		.cfi_def_cfa_offset 56
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 10
+
+
+  68:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   LL_DMA_InitTypeDef DMA_InitStruct;
+ 205              		.loc 1 68 3 is_stmt 1 view .LVU49
+  69:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  70:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Initialise the DMA */
+  71:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   LL_DMA_StructInit(&DMA_InitStruct);
+ 206              		.loc 1 71 3 view .LVU50
+ 207 0004 01A8     		add	r0, sp, #4
+ 208              	.LVL10:
+ 209              		.loc 1 71 3 is_stmt 0 view .LVU51
+ 210 0006 FFF7FEFF 		bl	LL_DMA_StructInit
+ 211              	.LVL11:
+  72:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Direction = LL_DMA_DIRECTION_MEMORY_TO_PERIPH;
+ 212              		.loc 1 72 3 is_stmt 1 view .LVU52
+ 213              		.loc 1 72 28 is_stmt 0 view .LVU53
+ 214 000a 1023     		movs	r3, #16
+ 215 000c 0393     		str	r3, [sp, #12]
+  73:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Mode = LL_DMA_MODE_NORMAL;
+ 216              		.loc 1 73 3 is_stmt 1 view .LVU54
+ 217              		.loc 1 73 23 is_stmt 0 view .LVU55
+ 218 000e 0023     		movs	r3, #0
+ 219 0010 0493     		str	r3, [sp, #16]
+  74:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
+ 220              		.loc 1 74 3 is_stmt 1 view .LVU56
+ 221              		.loc 1 74 40 is_stmt 0 view .LVU57
+ 222 0012 0593     		str	r3, [sp, #20]
+  75:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
+ 223              		.loc 1 75 3 is_stmt 1 view .LVU58
+ 224              		.loc 1 75 40 is_stmt 0 view .LVU59
+ 225 0014 8022     		movs	r2, #128
+ 226 0016 0692     		str	r2, [sp, #24]
+  76:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;
+ 227              		.loc 1 76 3 is_stmt 1 view .LVU60
+ 228              		.loc 1 76 41 is_stmt 0 view .LVU61
+ 229 0018 0793     		str	r3, [sp, #28]
+  77:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_BYTE;
+ 230              		.loc 1 77 3 is_stmt 1 view .LVU62
+ 231              		.loc 1 77 41 is_stmt 0 view .LVU63
+ 232 001a 0893     		str	r3, [sp, #32]
+  78:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.NbData = 0;
+ 233              		.loc 1 78 3 is_stmt 1 view .LVU64
+ 234              		.loc 1 78 25 is_stmt 0 view .LVU65
+ 235 001c 0993     		str	r3, [sp, #36]
+  79:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.MemoryOrM2MDstAddress = 0x0;
+ 236              		.loc 1 79 3 is_stmt 1 view .LVU66
+ 237              		.loc 1 79 40 is_stmt 0 view .LVU67
+ 238 001e 0293     		str	r3, [sp, #8]
+  80:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphOrM2MSrcAddress = 0x0;
+ 239              		.loc 1 80 3 is_stmt 1 view .LVU68
+ 240              		.loc 1 80 40 is_stmt 0 view .LVU69
+ 241 0020 0193     		str	r3, [sp, #4]
+  81:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  82:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Enable the clock */
+  83:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   UCPDDMA_INSTANCE0_CLOCKENABLE_TX;
+ 242              		.loc 1 83 3 is_stmt 1 view .LVU70
+ 243              	.LVL12:
+ 244              	.LBB8:
+ 245              	.LBI8:
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 11
+
+
+ 243:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h **** {
+ 246              		.loc 2 243 22 view .LVU71
+ 247              	.LBB9:
+ 245:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   SET_BIT(RCC->AHB1ENR, Periphs);
+ 248              		.loc 2 245 3 view .LVU72
+ 246:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   /* Delay after an RCC peripheral clock enabling */
+ 249              		.loc 2 246 3 view .LVU73
+ 250 0022 03F18043 		add	r3, r3, #1073741824
+ 251 0026 03F50433 		add	r3, r3, #135168
+ 252 002a 9A6C     		ldr	r2, [r3, #72]
+ 253 002c 42F00102 		orr	r2, r2, #1
+ 254 0030 9A64     		str	r2, [r3, #72]
+ 248:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   (void)tmpreg;
+ 255              		.loc 2 248 3 view .LVU74
+ 248:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   (void)tmpreg;
+ 256              		.loc 2 248 12 is_stmt 0 view .LVU75
+ 257 0032 9B6C     		ldr	r3, [r3, #72]
+ 258 0034 03F00103 		and	r3, r3, #1
+ 248:Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h ****   (void)tmpreg;
+ 259              		.loc 2 248 10 view .LVU76
+ 260 0038 0093     		str	r3, [sp]
+ 261              		.loc 2 249 3 is_stmt 1 view .LVU77
+ 262 003a 009B     		ldr	r3, [sp]
+ 263              	.LVL13:
+ 264              		.loc 2 249 3 is_stmt 0 view .LVU78
+ 265              	.LBE9:
+ 266              	.LBE8:
+  84:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  85:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.PeriphRequest = UCPDDMA_INSTANCE0_REQUEST_TX;
+ 267              		.loc 1 85 3 is_stmt 1 view .LVU79
+ 268              		.loc 1 85 32 is_stmt 0 view .LVU80
+ 269 003c 7323     		movs	r3, #115
+ 270 003e 0A93     		str	r3, [sp, #40]
+  86:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   DMA_InitStruct.Priority = LL_DMA_PRIORITY_MEDIUM;
+ 271              		.loc 1 86 3 is_stmt 1 view .LVU81
+ 272              		.loc 1 86 27 is_stmt 0 view .LVU82
+ 273 0040 4FF48053 		mov	r3, #4096
+ 274 0044 0B93     		str	r3, [sp, #44]
+  87:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)LL_DMA_Init(UCPDDMA_INSTANCE0_DMA_TX, UCPDDMA_INSTANCE0_LL_CHANNEL_TX, &DMA_InitStruct);
+ 275              		.loc 1 87 3 is_stmt 1 view .LVU83
+ 276              		.loc 1 87 9 is_stmt 0 view .LVU84
+ 277 0046 01AA     		add	r2, sp, #4
+ 278 0048 0121     		movs	r1, #1
+ 279 004a 0348     		ldr	r0, .L11
+ 280 004c FFF7FEFF 		bl	LL_DMA_Init
+ 281              	.LVL14:
+  88:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   return UCPDDMA_INSTANCE0_CHANNEL_TX;
+ 282              		.loc 1 88 3 is_stmt 1 view .LVU85
+  89:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 283              		.loc 1 89 1 is_stmt 0 view .LVU86
+ 284 0050 0248     		ldr	r0, .L11+4
+ 285 0052 0DB0     		add	sp, sp, #52
+ 286              	.LCFI5:
+ 287              		.cfi_def_cfa_offset 4
+ 288              		@ sp needed
+ 289 0054 5DF804FB 		ldr	pc, [sp], #4
+ 290              	.L12:
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 12
+
+
+ 291              		.align	2
+ 292              	.L11:
+ 293 0058 00000240 		.word	1073872896
+ 294 005c 1C000240 		.word	1073872924
+ 295              		.cfi_endproc
+ 296              	.LFE950:
+ 298              		.section	.text.USBPD_HW_DeInit_DMATxInstance,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	USBPD_HW_DeInit_DMATxInstance
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 305              	USBPD_HW_DeInit_DMATxInstance:
+ 306              	.LVL15:
+ 307              	.LFB951:
+  90:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  91:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** void USBPD_HW_DeInit_DMATxInstance(uint8_t PortNum)
+  92:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+ 308              		.loc 1 92 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		@ link register save eliminated.
+  93:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)PortNum;
+ 313              		.loc 1 93 3 view .LVU88
+  94:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 314              		.loc 1 94 1 is_stmt 0 view .LVU89
+ 315 0000 7047     		bx	lr
+ 316              		.cfi_endproc
+ 317              	.LFE951:
+ 319              		.section	.text.USBPD_HW_GetRpResistorValue,"ax",%progbits
+ 320              		.align	1
+ 321              		.global	USBPD_HW_GetRpResistorValue
+ 322              		.syntax unified
+ 323              		.thumb
+ 324              		.thumb_func
+ 326              	USBPD_HW_GetRpResistorValue:
+ 327              	.LVL16:
+ 328              	.LFB952:
+  95:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+  96:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** uint32_t USBPD_HW_GetRpResistorValue(uint8_t PortNum)
+  97:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+ 329              		.loc 1 97 1 is_stmt 1 view -0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              		@ link register save eliminated.
+  98:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)PortNum;
+ 334              		.loc 1 98 3 view .LVU91
+  99:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   return LL_UCPD_RESISTOR_3_0A;
+ 335              		.loc 1 99 3 view .LVU92
+ 100:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 336              		.loc 1 100 1 is_stmt 0 view .LVU93
+ 337 0000 4FF4C070 		mov	r0, #384
+ 338              	.LVL17:
+ 339              		.loc 1 100 1 view .LVU94
+ 340 0004 7047     		bx	lr
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 13
+
+
+ 341              		.cfi_endproc
+ 342              	.LFE952:
+ 344              		.section	.text.USBPD_HW_SetFRSSignalling,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	USBPD_HW_SetFRSSignalling
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	USBPD_HW_SetFRSSignalling:
+ 352              	.LVL18:
+ 353              	.LFB953:
+ 101:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+ 102:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** void USBPD_HW_SetFRSSignalling(uint8_t PortNum, uint8_t cc)
+ 103:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** {
+ 354              		.loc 1 103 1 is_stmt 1 view -0
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              		@ link register save eliminated.
+ 104:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   (void)PortNum;
+ 359              		.loc 1 104 3 view .LVU96
+ 105:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** 
+ 106:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   /* Configure FRSTX GPIO */
+ 107:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   if (1u == cc)
+ 360              		.loc 1 107 3 view .LVU97
+ 108:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   {
+ 109:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****     /* FRS_TX common */
+ 110:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****     UCPDFRS_INSTANCE0_FRSCC1;
+ 111:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   }
+ 112:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   else
+ 113:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   {
+ 114:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****     /* FRS_TX common */
+ 115:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****     UCPDFRS_INSTANCE0_FRSCC2;
+ 361              		.loc 1 115 29 view .LVU98
+ 116:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c ****   }
+ 117:Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c **** }
+ 362              		.loc 1 117 1 is_stmt 0 view .LVU99
+ 363 0000 7047     		bx	lr
+ 364              		.cfi_endproc
+ 365              	.LFE953:
+ 367              		.text
+ 368              	.Letext0:
+ 369              		.file 3 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/machine/_de
+ 370              		.file 4 "/opt/homebrew/Cellar/arm-none-eabi-gcc/10.3-2021.10/gcc/arm-none-eabi/include/sys/_stdint
+ 371              		.file 5 "Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h"
+ 372              		.file 6 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dma.h"
+ 373              		.file 7 "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_tim.h"
+ARM GAS  /var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usbpd_hw.c
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:20     .text.USBPD_HW_GetUSPDInstance:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:26     .text.USBPD_HW_GetUSPDInstance:0000000000000000 USBPD_HW_GetUSPDInstance
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:44     .text.USBPD_HW_GetUSPDInstance:0000000000000004 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:49     .text.USBPD_HW_Init_DMARxInstance:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:55     .text.USBPD_HW_Init_DMARxInstance:0000000000000000 USBPD_HW_Init_DMARxInstance
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:157    .text.USBPD_HW_Init_DMARxInstance:0000000000000054 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:163    .text.USBPD_HW_DeInit_DMARxInstance:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:169    .text.USBPD_HW_DeInit_DMARxInstance:0000000000000000 USBPD_HW_DeInit_DMARxInstance
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:184    .text.USBPD_HW_Init_DMATxInstance:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:190    .text.USBPD_HW_Init_DMATxInstance:0000000000000000 USBPD_HW_Init_DMATxInstance
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:293    .text.USBPD_HW_Init_DMATxInstance:0000000000000058 $d
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:299    .text.USBPD_HW_DeInit_DMATxInstance:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:305    .text.USBPD_HW_DeInit_DMATxInstance:0000000000000000 USBPD_HW_DeInit_DMATxInstance
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:320    .text.USBPD_HW_GetRpResistorValue:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:326    .text.USBPD_HW_GetRpResistorValue:0000000000000000 USBPD_HW_GetRpResistorValue
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:345    .text.USBPD_HW_SetFRSSignalling:0000000000000000 $t
+/var/folders/kd/c99kx6qx51n19rszfxl6vhn80000gp/T//ccFjesmA.s:351    .text.USBPD_HW_SetFRSSignalling:0000000000000000 USBPD_HW_SetFRSSignalling
+
+UNDEFINED SYMBOLS
+LL_DMA_StructInit
+LL_DMA_Init
